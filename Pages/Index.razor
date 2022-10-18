@@ -7,25 +7,20 @@
     <ul class="pizza-cards">
         @if (specials != null)
         {
-            @foreach (var pizza in specials)
+            @foreach (Model.PizzaSpecial pizza in specials)
             {
-                <li style="background-image: url('@pizza.ImageUrl')">
-                    <div class="pizza-info">
-                        <span class="title">@pizza.Name</span>
-                        @pizza.Description
-                        <span class="price">@pizza.GetFormattedBasePrice()</span>
-                    </div>
-                </li>
+                <PizzaSpecial Pizza="@pizza"/>
             }
         }
     </ul>
 </div>
 
 @code {
-    List<PizzaSpecial> specials = new();
+    List<Model.PizzaSpecial> specials = new();
 
     protected override async Task OnInitializedAsync()
     {
-        specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
+        specials = await HttpClient
+            .GetFromJsonAsync<List<Model.PizzaSpecial>>(NavigationManager.BaseUri + "specials");
     }
 }

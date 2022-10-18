@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazingPizza.Data;
 
@@ -8,5 +9,5 @@ public class PizzaStoreContext : DbContext
     {
     }
 
-    public DbSet<PizzaSpecial> Specials { get; set; }
+    public DbSet<Model.PizzaSpecial> Specials { get; set; }
 }
