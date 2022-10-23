@@ -1,19 +1,30 @@
 @page "/"
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
+@inject Services.OrderState OrderState
 
 <div class="main">
     <h1>Blazing Pizzas</h1>
     <ul class="pizza-cards">
         @if (specials != null)
         {
-            @foreach (Model.PizzaSpecial pizza in specials)
+            @foreach (Model.PizzaSpecial special in specials)
             {
-                <PizzaSpecial Pizza="@pizza"/>
+                <li @onclick="() => OrderState.ShowConfigurePizzaDialog(special)"
+                    style="background-image: url('@special.ImageUrl')">
+                    <PizzaSpecial Pizza="@special"/>
+                </li>
             }
         }
     </ul>
 </div>
+
+@if (OrderState.ShowingConfigureDialog)
+{
+    <ConfigurePizzaDialog Pizza="OrderState.ConfiguringPizza"
+                          OnCancel="OrderState.CancelConfigurePizzaDialog"
+                          OnConfirm="OrderState.ConfirmConfigurePizzaDialog" />
+}
 
 @code {
     List<Model.PizzaSpecial> specials = new();
